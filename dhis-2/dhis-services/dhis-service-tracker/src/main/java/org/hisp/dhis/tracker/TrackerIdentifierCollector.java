@@ -85,9 +85,11 @@ public class TrackerIdentifierCollector
         collectEnrollments( identifiers, params.getEnrollments() );
         collectEvents( identifiers, params.getEvents() );
         collectRelationships( identifiers, params.getRelationships() );
+        // TODO() this is a problem! are we loading them using the correct
+        // idScheme?
         // Using "*" signals that all the entities of the given type have to be
         // preloaded in the Preheat
-        identifiers.put( TrackedEntityType.class, Set.of( ID_WILDCARD ) );
+        // identifiers.put( TrackedEntityType.class, Set.of( ID_WILDCARD ) );
         identifiers.put( RelationshipType.class, Set.of( ID_WILDCARD ) );
 
         collectProgramRulesFields( identifiers );
@@ -122,6 +124,7 @@ public class TrackerIdentifierCollector
     {
         trackedEntities.forEach( trackedEntity -> {
             addIdentifier( identifiers, TrackedEntity.class, trackedEntity.getTrackedEntity() );
+            addIdentifier( identifiers, TrackedEntityType.class, trackedEntity.getTrackedEntityType() );
             addIdentifier( identifiers, OrganisationUnit.class, trackedEntity.getOrgUnit() );
 
             collectEnrollments( identifiers, trackedEntity.getEnrollments() );
